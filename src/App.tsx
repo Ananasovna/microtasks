@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {NewComponent} from "./components/NewComponent";
 import {Button} from "./components/Button";
 
 function App() {
-    const showSubscriber = (name: string, age: number) => {
-        console.log(name, age)
+
+    let [counter, setCounter] = useState(0);
+
+    const count = () => {
+        setCounter(++counter);
+        console.log(counter);
     }
 
-    const showStupidButton = () => {
-        console.log('I\'m stupid button');
+    const clearCounter = () => {
+        setCounter(0);
+    }
+    const showSubscriber = (name: string, age: number) => {
+        console.log(name, age)
     }
 
 
@@ -17,11 +24,11 @@ function App() {
   return (
     <div className="App">
       <NewComponent />
-        {/*<button onClick={(event) => showSubscriber('Vasya')}>MyYouTubeChannel</button>*/}
-        {/*<button onClick={(event) => showSubscriber('Ivan')}>MyYouTubeChannel</button>*/}
         <Button callBack={() => showSubscriber('Vasya', 21)} title={'My button'}/>
         <Button callBack={() => showSubscriber('Ivan', 18)} title={'Your button'}/>
-        <Button callBack={showStupidButton} title={'Stupid button'}/>
+        <div>{counter}</div>
+        <Button callBack={count} title={'Count'}/>
+        <Button callBack={clearCounter} title={'Clear'}/>
 
     </div>
   );
