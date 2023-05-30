@@ -1,35 +1,50 @@
 import React, {useState} from 'react';
 import './App.css';
-import {NewComponent} from "./components/NewComponent";
-import {Button} from "./components/Button";
+import {FilterType, NewComponent} from "./components/NewComponent";
 
+export type CurrencyType = {
+    banknots: string,
+    value: number,
+    number: string,
+}
 function App() {
 
-    let [counter, setCounter] = useState(0);
+    const [money, setMoney] = useState<CurrencyType[]>([
+        { banknots: 'Dollars', value: 100, number: ' a1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' z1234567890' },
+        { banknots: 'RUBLS', value: 100, number: ' w1234567890' },
+        { banknots: 'Dollars', value: 100, number: ' e1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' c1234567890' },
+        { banknots: 'RUBLS', value: 100, number: ' r1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' x1234567890' },
+        { banknots: 'RUBLS', value: 50, number: ' v1234567890' },
+    ])
 
-    const count = () => {
-        setCounter(++counter);
-        console.log(counter);
+    const [filter, setFilter] = useState('all');
+
+    const changeFilter = (filter: FilterType) => {
+        setFilter(filter);
+    }
+    const filterMoney = () => {
+        let filteredMoney = money;
+        switch (filter) {
+            case 'all':
+                filteredMoney = money;
+                break;
+            case 'rub':
+                filteredMoney = money.filter(el => el.banknots === 'RUBLS');
+                break;
+            case 'dol':
+                filteredMoney = money.filter(el => el.banknots === 'Dollars');
+                break;
+        }
+
+        return filteredMoney;
     }
 
-    const clearCounter = () => {
-        setCounter(0);
-    }
-    const showSubscriber = (name: string, age: number) => {
-        console.log(name, age)
-    }
-
-
-
-  return (
-    <div className="App">
-      <NewComponent />
-        <Button callBack={() => showSubscriber('Vasya', 21)} title={'My button'}/>
-        <Button callBack={() => showSubscriber('Ivan', 18)} title={'Your button'}/>
-        <div>{counter}</div>
-        <Button callBack={count} title={'Count'}/>
-        <Button callBack={clearCounter} title={'Clear'}/>
-
+    return (
+        <div className="App">
+            <NewComponent filterMoney={filterMoney} changeFilter={changeFilter}/>
     </div>
   );
 }

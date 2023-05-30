@@ -1,5 +1,14 @@
+import {Button} from "./Button";
+import React from "react";
+import {CurrencyType} from "../App";
 
-export const NewComponent = () => {
+type NewComponentPropsType = {
+    filterMoney: () => CurrencyType[];
+    changeFilter: (filter: FilterType) => void;
+}
+
+export type FilterType = 'dol' | 'rub' | 'all';
+export const NewComponent = (props: NewComponentPropsType) => {
 
     const topCars = [
         {manufacturer:'BMW', model:'m5cs'},
@@ -8,23 +17,20 @@ export const NewComponent = () => {
     ]
 
     return (
-        <table>
-            <tr>
-                <th>Number</th>
-                <th>Car</th>
-                <th>Model</th>
-            </tr>
-            {topCars.map((el, index) => {
+        <div>
+            {props.filterMoney().map((el, index) => {
                 return (
-                    <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{el.manufacturer}</td>
-                        <td>{el.model}</td>
-                    </tr>
+                    <li key={index}>
+                        <span>{el.banknots}</span>
+                        <span>{el.value}</span>
+                        <span>{el.number}</span>
+                    </li>
                 )
             })
             }
-
-         </table>
+            <Button title={'rub'} callBack={() => props.changeFilter('rub')} />
+            <Button title={'dol'} callBack={() => props.changeFilter('dol')} />
+            <Button title={'all'} callBack={() => props.changeFilter('all')} />
+        </div>
     )
 }
