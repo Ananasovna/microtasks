@@ -1,52 +1,41 @@
 import React, {useState} from 'react';
 import './App.css';
-import {FilterType, NewComponent} from "./components/NewComponent";
+import {FullInput} from './components/input/FullInput';
 
-export type CurrencyType = {
-    banknots: string,
-    value: number,
-    number: string,
+export type MessageType = {
+    message: string;
 }
-function App() {
 
-    const [money, setMoney] = useState<CurrencyType[]>([
-        { banknots: 'Dollars', value: 100, number: ' a1234567890' },
-        { banknots: 'Dollars', value: 50, number: ' z1234567890' },
-        { banknots: 'RUBLS', value: 100, number: ' w1234567890' },
-        { banknots: 'Dollars', value: 100, number: ' e1234567890' },
-        { banknots: 'Dollars', value: 50, number: ' c1234567890' },
-        { banknots: 'RUBLS', value: 100, number: ' r1234567890' },
-        { banknots: 'Dollars', value: 50, number: ' x1234567890' },
-        { banknots: 'RUBLS', value: 50, number: ' v1234567890' },
+export type MessagesType = MessageType[];
+
+function App() {
+    let [messages, setMessages] = useState<MessagesType>([
+        {message: 'message1'},
+        {message: 'message2'},
+        {message: 'message3'},
+        {message: 'message4'},
     ])
 
-    const [filter, setFilter] = useState('all');
 
-    const changeFilter = (filter: FilterType) => {
-        setFilter(filter);
-    }
-    const filterMoney = () => {
-        let filteredMoney = money;
-        switch (filter) {
-            case 'all':
-                filteredMoney = money;
-                break;
-            case 'rub':
-                filteredMoney = money.filter(el => el.banknots === 'RUBLS');
-                break;
-            case 'dol':
-                filteredMoney = money.filter(el => el.banknots === 'Dollars');
-                break;
-        }
+    // let mappedMessages = (messages: MessagesType) => {
+    //     return
+    //     })
+    // }
 
-        return filteredMoney;
-    }
+    const addMessage = (newMessage: MessageType) => {
+        setMessages(prev=> [newMessage, ...prev]);
+      }
 
     return (
         <div className="App">
-            <NewComponent filterMoney={filterMoney} changeFilter={changeFilter}/>
-    </div>
-  );
+            <FullInput addMessage={addMessage}/>
+            {messages.map((el, index) => {
+                return (
+                    <div key={index}>{el.message}</div>
+                )})
+            }
+        </div>
+    );
 }
 
 export default App;
