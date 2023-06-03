@@ -1,13 +1,14 @@
 
 type InputButtonPropsType = {
-    sendMessage: () => void,
+    title: string;
+    callBack: () => void,
 }
 export const InputButton = (props: InputButtonPropsType) => {
     const onClickButtonHandler = () => {
-        props.sendMessage();
+        props.callBack();
     }
 
     return (
-        <button onClick={onClickButtonHandler}>X</button>
+        <button onClick={onClickButtonHandler}>{props.title}</button>
     )
 }

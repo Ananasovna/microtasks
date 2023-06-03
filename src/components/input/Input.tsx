@@ -1,13 +1,13 @@
-import {ChangeEvent} from "react";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
 
 type InputPropsType = {
     value: string,
-    changeInputValue: (event: ChangeEvent<HTMLInputElement>) => void,
+    setValue: Dispatch<SetStateAction<string>>
 }
 export const Input = (props: InputPropsType) => {
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        props.changeInputValue(event)
+        props.setValue(event.currentTarget.value);
     }
     return (
         <input value={props.value} onChange={onChangeInputHandler}/>

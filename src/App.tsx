@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Input} from "./components/input/Input";
 import {InputButton} from "./components/input/InputButton";
@@ -19,26 +19,24 @@ function App() {
 
     let [value, setValue] = useState<string>('');
 
-    const changeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.currentTarget.value);
-        console.log(value)
-    }
+    // const changeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setValue(event.currentTarget.value);
+    // }
 
     const addMessage = (newMessage: MessageType) => {
         setMessages(prev=> [newMessage, ...prev]);
       }
 
-    const sendMessage = () => {
+    const callbackButtonHandler = () => {
         addMessage({message: value});
         setValue('');
-        console.log('value = ' + value)
     }
 
     return (
         <div className="App">
             {/*<FullInput addMessage={addMessage}/>*/}
-            <Input value={value} changeInputValue={changeInputValue}/>
-            <InputButton sendMessage={sendMessage}/>
+            <Input value={value} setValue={setValue}/>
+            <InputButton title={'send'} callBack={callbackButtonHandler}/>
             {messages.map((el, index) => {
                 return (
                     <div key={index}>{el.message}</div>
