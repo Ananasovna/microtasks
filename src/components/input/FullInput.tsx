@@ -1,5 +1,8 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
-import {MessagesType, MessageType} from '../../App';
+
+type MessageType = {
+    message: string
+}
 
 type FullInputPropsType = {
     addMessage: (message: MessageType) => void;
